@@ -53,7 +53,7 @@ public class Guicifier extends GuiceServletContextListener {
             }
 
             //injector = Guice.createInjector(new ServletConfig());
-            injector = Guice.createInjector(new JpaPersistModule("sampleJpaUnit"));
+            injector = Guice.createInjector(new JpaPersistModule("sampleJpaUnit"), new ServiceModule());
         }
 
         return injector;
