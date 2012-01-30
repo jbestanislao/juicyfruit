@@ -3,12 +3,8 @@
  */
 package com.onsale.deals;
 
-import java.io.InputStream;
-import java.net.URL;
-
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import com.google.inject.persist.jpa.JpaPersistModule;
 import com.google.inject.servlet.GuiceServletContextListener;
 
 import javax.servlet.ServletContextEvent;
@@ -53,7 +49,7 @@ public class Guicifier extends GuiceServletContextListener {
             }
 
             //injector = Guice.createInjector(new ServletConfig());
-            injector = Guice.createInjector(new JpaPersistModule("sampleJpaUnit"), new ServiceModule());
+            injector = Guice.createInjector(new ServletConfigModule(), new ServiceModule());
         }
 
         return injector;
