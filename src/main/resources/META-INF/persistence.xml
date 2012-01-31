@@ -7,16 +7,9 @@
         <!-- A JPA Persistence Unit -->
         <persistence-unit name="sampleJpaUnit" transaction-type="RESOURCE_LOCAL">
                 <provider>org.hibernate.ejb.HibernatePersistence</provider>
+                <jta-data-source>java:comp/env/onsale</jta-data-source>
 
                 <!-- JPA entities must be registered here -->
                 <class>com.onsale.deals.bo.Sample</class>
-
-                <properties>
-                    <!-- vendor-specific properties go here -->
-                    <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/test"/>
-                    <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
-                    <property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider"/>
-                    <property name="hibernate.format_sql" value="true"/>
-                </properties>
-        </persistence-unit>
+       </persistence-unit>
 </persistence>

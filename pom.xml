@@ -32,25 +32,17 @@
             <version>3.0</version>
         </dependency>
 
+        <!-- HIBERNATE DEPENDENCIES -->
         <dependency>
-           <groupId>org.hibernate</groupId>
-           <artifactId>hibernate-core</artifactId>
-           <version>3.3.2.GA</version>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>3.6.4.Final</version>
         </dependency>
+        <!-- MYSQL DEPENDENCIES -->
         <dependency>
-           <groupId>org.hibernate</groupId>
-           <artifactId>hibernate-annotations</artifactId>
-           <version>3.4.0.GA</version>
-        </dependency>
-        <dependency>
-           <groupId>org.hibernate</groupId>
-           <artifactId>hibernate-commons-annotations</artifactId>
-           <version>3.3.0.ga</version>
-        </dependency>
-        <dependency>
-           <groupId>org.hibernate</groupId>
-           <artifactId>hibernate-entitymanager</artifactId>
-           <version>3.4.0.GA</version>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.16</version>
         </dependency>
 
 
@@ -124,7 +116,7 @@
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
-            <version>2.4</version>
+            <version>2.5</version>
             <scope>provided</scope>
         </dependency>
 
