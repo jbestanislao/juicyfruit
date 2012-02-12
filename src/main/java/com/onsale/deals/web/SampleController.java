@@ -17,11 +17,19 @@ public class SampleController extends HttpServlet {
     private SampleService sampleService;
 
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println("Test Sample Controller");
         Injector injector = Guicifier.injector();
         injector.injectMembers(this);
-        System.out.println("Test Sample Controller");
-        Sample sample = sampleService.findById(1L);
-        System.out.println(sample.getEmail());
+
+        Long idParam = Long.valueOf(req.getParameter("id"));
+        String action = req.getParameter("action");
+
+        if (action != null && action.equals("delete")) {
+            sampleService.remove(idParam);
+        } else {
+            Sample sample = sampleService.findById(idParam);
+            System.out.println(sample.getEmail());
+        }
     }
 
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

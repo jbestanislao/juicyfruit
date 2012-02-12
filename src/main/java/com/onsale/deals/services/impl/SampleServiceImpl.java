@@ -16,4 +16,8 @@ public class SampleServiceImpl implements SampleService {
     public Sample findById(Long id) {
         return sampleDao.findById(id);
     }
+
+    public void remove(Long id) {
+        sampleDao.remove(id);
+    }
 }
