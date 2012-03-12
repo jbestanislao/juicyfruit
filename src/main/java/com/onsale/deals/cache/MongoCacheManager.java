@@ -1,10 +1,12 @@
 package com.onsale.deals.cache;
 
 import com.mongodb.*;
+import org.apache.commons.beanutils.BeanUtilsBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.net.UnknownHostException;
+import java.util.Map;
 
 public class MongoCacheManager implements CacheManager {
     private static final Logger log = LoggerFactory.getLogger(MongoCacheManager.class);
@@ -17,7 +19,7 @@ public class MongoCacheManager implements CacheManager {
 
     private MongoCacheManager() throws CacheException {
         try {
-            mongo = new Mongo("localhost", 27017);
+            mongo = new Mongo("172.16.229.130", 27017);
             dbCache = mongo.getDB(mongoDbName);
         } catch (UnknownHostException uhe) {
             throw new CacheException(uhe);
@@ -32,7 +34,7 @@ public class MongoCacheManager implements CacheManager {
         return instance;
     }
 
-    public void put(String tableName, BasicDBObject doc) {
+    public void put(String tableName, Object obj) {
         DBCollection coll = null;
 
         if (!dbCache.getCollectionNames().contains(tableName)) {
@@ -42,7 +44,14 @@ public class MongoCacheManager implements CacheManager {
             coll = dbCache.getCollection(tableName);
         }
 
-        coll.insert(doc);
+        try {
+            Map objMap = BeanUtilsBean.getInstance().describe(obj);
+            BasicDBObject mongoObj = new BasicDBObject(objMap);
+            coll.insert(mongoObj);
+        } catch (Exception e) {
+            throw new RuntimeException("error in saving object to mongodb! ", e);
+        }
+
     }
 
     public DBObject getById(String tableName, Object value) {
@@ -51,7 +60,7 @@ public class MongoCacheManager implements CacheManager {
 
     public DBObject getBy(String tableName, String field, Object value) {
         BasicDBObject query = new BasicDBObject();
-        query.put(field, value);
+        query.put(field, (String)value);
 
         if (dbCache.getCollectionNames().contains(tableName)) {
             DBCollection coll = dbCache.getCollection(tableName);

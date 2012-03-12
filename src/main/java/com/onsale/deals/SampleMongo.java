@@ -1,13 +1,50 @@
 package com.onsale.deals;
 
 import com.mongodb.*;
+import com.onsale.deals.bo.Sample;
+import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.beanutils.BeanUtilsBean;
+
+import java.util.Map;
 import java.util.Set;
 
 public class SampleMongo {
     private static final String mongoDbName = "onsale";
 
     public static void main(String[] args) throws Exception {
-        Mongo mongo = new Mongo("localhost", 27017);
+        Sample sample = new Sample();
+        sample.setId(2L);
+        sample.setEmail("test");
+
+        Object objectSample = (Object)sample;
+
+        Map sampleMap = BeanUtilsBean.getInstance().describe(objectSample);
+
+
+
+        System.out.println("sampleMap: " + sampleMap);
+
+        BasicDBObject sampleMongo = new BasicDBObject(sampleMap);
+        System.out.println("sampleMongo: " + sampleMongo);
+
+        Mongo mongoDB = new Mongo("172.16.229.130", 27017);
+        DB dbCache = mongoDB.getDB(mongoDbName);
+        DBCollection coll = dbCache.getCollection("com.onsale.deals.bo.Sample");
+
+        //coll.insert(sampleMongo);
+
+        BasicDBObject query = new BasicDBObject();
+        query.put("id", "2");
+        DBObject mongoObject = coll.findOne(query);
+
+        Sample sampleBean = new Sample();
+
+        BeanUtils.copyProperties(sampleBean, mongoObject);
+
+        System.out.println("mongoObject: " + mongoObject);
+        System.out.println("sampleObject: " + sampleBean);
+
+        /*Mongo mongo = new Mongo("localhost", 27017);
         DB dbCache = mongo.getDB(mongoDbName);
         DBCollection coll = dbCache.getCollection("com.onsale.deals.bo.Sample");
 
@@ -26,7 +63,7 @@ System.out.println("");
             System.out.println(cur.next());
         }
 
-        mongo.close();
+        mongo.close();*/
     }
 
 

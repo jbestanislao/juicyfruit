@@ -5,7 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public interface CacheManager {
-    void put(String tableName, BasicDBObject doc);
+    void put(String tableName, Object obj);
     DBObject getById(String tableName, Object value);
     DBObject getBy(String tableName, String field, Object value);
     void remove(String tableName, Object value);
